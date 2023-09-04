@@ -15,57 +15,10 @@ namespace DereCoin.Types
     }
     public class CoinChance
     {
-        private ItemType item = ItemType.Painkillers;
-        private Effect effect;
-        private int chance = 50;
-        Rewards rewardType = Rewards.ItemReward;
-        private string message;
-
-        public Object getReward()
-        {
-            if(rewardType == Rewards.ItemReward)
-            {
-                return item;
-            }else if (rewardType == Rewards.EffectReward)
-            {
-                return effect;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public Rewards getRewardType()
-        {
-            return rewardType;
-        }
-
-        public int getChance()
-        {
-            return chance;
-        }
-
-        public string getMessage()
-        {
-            return message;
-        }
-
-        public CoinChance(ItemType item, string message, int chance)
-        {
-            this.item = item;
-            this.chance = chance;
-            this.rewardType = Rewards.ItemReward;
-            this.message = message;
-        }
-
-        public CoinChance(EffectType effect, int duration, string message, int chance)
-        {
-            this.effect = new Effect(effect, duration);
-            this.chance = chance;
-            this.rewardType = Rewards.EffectReward;
-            this.message = message;
-        }
-
+        public ItemType Item { get; set; }
+        public Effect Effect { get; set; }
+        public int Chance { get; set; }
+        public Rewards RewardType { get; set; }
+        public string Message { get; set; }
     }
 }

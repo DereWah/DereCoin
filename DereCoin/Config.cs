@@ -17,22 +17,21 @@ namespace DereCoin
         public bool Debug { get; set; }
 
         [Description("This is a list of all the possible rewards and their chance.")]
-        public List<Dictionary<String, Object>> ConfigItems { get; set; } = new()
+        public List<CoinChance> ConfigItems { get; set; } = new()
         {
-            new Dictionary<String, Object>()
+            new CoinChance()
             {
-                { "RewardType", "item" },
-                { "Reward", ItemType.Adrenaline.ToString() },
-                { "Message", "You got adrenaline from gambling!" },
-                { "Chance", 30 }
+                Item = ItemType.Adrenaline,
+                RewardType = Rewards.ItemReward,
+                Chance = 30,
+                Message = "You got adrenaline from gambling!"
             },
-                new Dictionary<String, Object>()
+            new CoinChance()
             {
-                { "RewardType", "effect" },
-                { "Reward", EffectType.Blinded.ToString() },
-                { "Duration", 3 },
-                { "Message", "You flipped the coin into your eyes" },
-                { "Chance", 30 }
+                Effect = new(EffectType.MovementBoost, 10),
+                RewardType = Rewards.EffectReward,
+                Chance = 30,
+                Message = "speed"
             }
         };
 

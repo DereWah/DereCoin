@@ -24,10 +24,9 @@ namespace DereCoin.Handlers
             int x = 0;
             if (plugin.Config.ConfigItems.Count() > 0)
             {
-                foreach (Dictionary<string, object> element in plugin.Config.ConfigItems)
+                foreach (CoinChance element in plugin.Config.ConfigItems)
                 {
-                    int chance = Convert.ToInt32(element["Chance"]);
-                    for (int i = 0; i < chance; i++)
+                    for (int i = 0; i < element.Chance; i++)
                     {
                         weightedIndexes.Add(x);
                     }
@@ -35,35 +34,20 @@ namespace DereCoin.Handlers
                 }
                 Random random = new Random();
                 int resultIndex = weightedIndexes[random.Next(weightedIndexes.Count)];
-                CoinChance el = getCoinChance(plugin.Config.ConfigItems[resultIndex]);
+                CoinChance el = plugin.Config.ConfigItems[resultIndex];
 
                 ev.Player.RemoveItem(ev.Item);
-                string message = el.getMessage().Replace("{player}", ev.Player.Nickname);
+                string message = el.Message.Replace("{player}", ev.Player.Nickname);
                 ev.Player.Broadcast(5, message);
-                if (el.getRewardType() == Rewards.EffectReward)
+                if (el.RewardType == Rewards.EffectReward)
                 {
-                    ev.Player.EnableEffect((Effect)el.getReward());
+                    ev.Player.EnableEffect(el.Effect);
                 }
-                else if (el.getRewardType() == Rewards.ItemReward)
+                else if (el.RewardType == Rewards.ItemReward)
                 {
-                    ev.Player.AddItem((ItemType)el.getReward());
+                    ev.Player.AddItem(el.Item);
                 }
             }
         }
-
-
-        CoinChance getCoinChance(Dictionary<string, object> obj)
-        {
-            if (((string)obj["RewardType"]).ToLower() == "item")
-            {
-                return (new CoinChance((ItemType)Enum.Parse(typeof(ItemType), (string)obj["Reward"]), (string)obj["Message"], Convert.ToInt32(obj["Chance"])));
-            }
-            else if (((string)obj["RewardType"]).ToLower() == "effect")
-            {
-                return (new CoinChance((EffectType)Enum.Parse(typeof(EffectType), (string)obj["Reward"]), Convert.ToInt32(obj["Duration"]), (string)obj["Message"], Convert.ToInt32(obj["Chance"])));
-            }
-            return null;
-        }
-
     }
 }
