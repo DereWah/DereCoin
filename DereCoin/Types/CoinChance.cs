@@ -13,15 +13,22 @@ namespace DereCoin.Types
     { 
         public int Chance { get; set; }
         public string Message { get; set; }
+
+        public CoinChanceBase() {
+            Chance = 0;
+            Message = "";
+        }
     }
     
     public sealed class CoinChanceItem : CoinChanceBase
     {
         public ItemType Item { get; set; }
+        
     }
 
     public sealed class CoinChanceEffect : CoinChanceBase
     {
         public Effect Effect { get; set; }
+
     }
 }

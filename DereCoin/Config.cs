@@ -16,15 +16,18 @@ namespace DereCoin
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; }
 
-        [Description("This is a list of all the possible rewards and their chance.")]
-        public List<CoinChanceBase> ConfigItems { get; set; } = new()
+        public List<CoinChanceItem> ConfigItems { get; set; } = new()
         {
             new CoinChanceItem()
             {
                 Item = ItemType.Adrenaline,
                 Chance = 30,
                 Message = "You got adrenaline from gambling!"
-            },
+            }
+        };
+
+        public List<CoinChanceEffect> ConfigEffects { get; set; } = new()
+        {
             new CoinChanceEffect()
             {
                 Effect = new(EffectType.MovementBoost, 10),

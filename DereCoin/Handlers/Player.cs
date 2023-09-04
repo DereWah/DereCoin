@@ -23,31 +23,22 @@ namespace DereCoin.Handlers
         public void OnCoinFlip(FlippingCoinEventArgs ev)
         {
             List<int> weightedIndexes = new List<int>();
-            int x = 0;
+
             if (plugin.Config.ConfigItems.Count() > 0)
             {
-                foreach (CoinChanceBase element in plugin.Config.ConfigItems)
-                {
-                    for (int i = 0; i < element.Chance; i++)
-                    {
-                        weightedIndexes.Add(x);
-                    }
-                    x++;
-                }
-                int resultIndex = weightedIndexes[random.Next(weightedIndexes.Count)];
-                CoinChanceBase el = plugin.Config.ConfigItems[resultIndex];
-
                 ev.Player.RemoveItem(ev.Item);
-                string message = el.Message.Replace("{player}", ev.Player.Nickname);
+                List<CoinChanceBase> joined = plugin.Config.ConfigItems + plugin.Config.ConfigEffects;
+                WeightedRandomSelector<CoinChanceBase> selector = new WeightedRandomSelector<CoinChanceBase>(plugin.Config.ConfigItems);
+                CoinChanceBase selectedElement = selector.GetRandomElement();
+
+                string message = selectedElement.Message.Replace("{player}", ev.Player.Nickname);
                 ev.Player.Broadcast(5, message);
 
-
-
-                if (el.Cast(out CoinChanceEffect cce))
+                if (selectedElement.Cast(out CoinChanceEffect cce))
                 {
                     ev.Player.EnableEffect(cce.Effect);
                 }
-                else if (el.Cast(out CoinChanceItem cci))
+                else if (selectedElement.Cast(out CoinChanceItem cci))
                 {
                     ev.Player.AddItem(cci.Item);
                 }
