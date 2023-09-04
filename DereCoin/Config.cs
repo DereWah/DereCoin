@@ -17,19 +17,17 @@ namespace DereCoin
         public bool Debug { get; set; }
 
         [Description("This is a list of all the possible rewards and their chance.")]
-        public List<CoinChance> ConfigItems { get; set; } = new()
+        public List<CoinChanceBase> ConfigItems { get; set; } = new()
         {
-            new CoinChance()
+            new CoinChanceItem()
             {
                 Item = ItemType.Adrenaline,
-                RewardType = Rewards.ItemReward,
                 Chance = 30,
                 Message = "You got adrenaline from gambling!"
             },
-            new CoinChance()
+            new CoinChanceEffect()
             {
                 Effect = new(EffectType.MovementBoost, 10),
-                RewardType = Rewards.EffectReward,
                 Chance = 30,
                 Message = "speed"
             }
