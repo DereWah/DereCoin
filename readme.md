@@ -4,16 +4,27 @@ Whenever a player flips a coin, they will be awarded with a random Item / Effect
 
 It is possible to configure all the items, effects and changes from the configuration file, according to the structure below:
 
-      config_items: 
-		  - RewardType: item
-		    Reward: Adrenaline
-		    Message: You got adrenaline from gambling!
-		    Chance: 30
-		  - RewardType: effect
-		    Reward: Blinded
-		    Duration: 5
-		    Message: You flipped the coin into your eyes.
-		    Chance: 100
+		coin_items:
+		  - item: Adrenaline
+		    chance: 30
+		    message: 'You got adrenaline from gambling!'
+      		  - item: GunA7
+		    chance: 30
+		    message: '{player}, you got a really weird gun from this coin...'
+		  coin_effects:
+		  - effect:
+		    # The effect type
+		      type: MovementBoost
+		      # The effect duration
+		      duration: 10
+		      # The effect intensity
+		      intensity: 200
+		      # If the effect is already active, setting to true will add this duration onto the effect.
+		      add_duration_if_active: false
+		      # Indicates whether the effect should be enabled or not
+		      is_enabled: true
+		    chance: 30
+		    message: 'speed'
 
 If you choose to award an "effect", you should also specify a Duration in the config. You can find a list of all the available Effects and Items as below:
 
