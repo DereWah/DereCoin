@@ -26,7 +26,6 @@ It is possible to configure all the items, effects and changes from the configur
 		    chance: 30
 		    message: 'speed'
 
-If you choose to award an "effect", you should also specify a Duration in the config. You can find a list of all the available Effects and Items as below:
 
 ## ItemTypes
 -   KeycardJanitor
