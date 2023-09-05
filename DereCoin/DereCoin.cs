@@ -16,6 +16,7 @@ namespace DereCoin
         public override string Prefix => "DCoin";
         public override string Author => "@derewah";
 
+        public override Version RequiredExiledVersion { get; } = new Version(8,0,0);
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
 
         private static readonly DereCoin Singleton = new();
