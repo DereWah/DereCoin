@@ -3,7 +3,6 @@ using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,29 +17,47 @@ namespace DereCoin.Handlers
 
         public DereCoin plugin;
 
-        Random random = new Random();
-
         public void OnCoinFlip(FlippingCoinEventArgs ev)
         {
-            List<int> weightedIndexes = new List<int>();
+            List<CoinChanceBase> joined = new();
+            List<CoinChanceBase> eval = new();
 
-            if (plugin.Config.ConfigItems.Count() > 0)
+            if (plugin.Config.CoinItems is not null || plugin.Config.CoinEffects is not null)
             {
-                ev.Player.RemoveItem(ev.Item);
-                List<CoinChanceBase> joined = plugin.Config.ConfigItems + plugin.Config.ConfigEffects;
-                WeightedRandomSelector<CoinChanceBase> selector = new WeightedRandomSelector<CoinChanceBase>(plugin.Config.ConfigItems);
-                CoinChanceBase selectedElement = selector.GetRandomElement();
+                
+                if (plugin.Config.CoinItems is not null)
+                    joined.AddRange(plugin.Config.CoinItems);
 
-                string message = selectedElement.Message.Replace("{player}", ev.Player.Nickname);
-                ev.Player.Broadcast(5, message);
-
-                if (selectedElement.Cast(out CoinChanceEffect cce))
+                if (plugin.Config.CoinEffects is not null)
+                    joined.AddRange(plugin.Config.CoinEffects);
+            
+                foreach (CoinChanceBase ccb in joined)
                 {
-                    ev.Player.EnableEffect(cce.Effect);
+                    if (UnityEngine.Random.Range(1, 101) > ccb.Chance)
+                        continue;
+
+                    eval.Add(ccb);
                 }
-                else if (selectedElement.Cast(out CoinChanceItem cci))
+
+                if (eval.Count() > 0)
                 {
-                    ev.Player.AddItem(cci.Item);
+                    ev.Player.RemoveItem(ev.Item);
+
+                    eval.ShuffleList();
+                    CoinChanceBase selectedElement = eval.FirstOrDefault();
+
+                    string message = selectedElement.Message.Replace("{player}", ev.Player.Nickname);
+                    ev.Player.ClearBroadcasts();
+                    ev.Player.Broadcast(3, message);
+
+                    if (selectedElement.Cast(out CoinChanceEffect cce))
+                    {
+                        ev.Player.EnableEffect(cce.Effect);
+                    }
+                    else if (selectedElement.Cast(out CoinChanceItem cci))
+                    {
+                        ev.Player.AddItem(cci.Item);
+                    }
                 }
             }
         }

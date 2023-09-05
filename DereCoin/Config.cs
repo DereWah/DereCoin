@@ -16,7 +16,7 @@ namespace DereCoin
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; }
 
-        public List<CoinChanceItem> ConfigItems { get; set; } = new()
+        public List<CoinChanceItem> CoinItems { get; set; } = new()
         {
             new CoinChanceItem()
             {
@@ -26,11 +26,11 @@ namespace DereCoin
             }
         };
 
-        public List<CoinChanceEffect> ConfigEffects { get; set; } = new()
+        public List<CoinChanceEffect> CoinEffects { get; set; } = new()
         {
             new CoinChanceEffect()
             {
-                Effect = new(EffectType.MovementBoost, 10),
+                Effect = new(EffectType.MovementBoost, 10, 10),
                 Chance = 30,
                 Message = "speed"
             }
