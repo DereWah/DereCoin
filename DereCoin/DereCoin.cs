@@ -15,18 +15,18 @@ namespace DereCoin
         public override string Name => "DereCoin";
         public override string Prefix => "DCoin";
         public override string Author => "@derewah";
-
         public override Version RequiredExiledVersion { get; } = new Version(8,0,0);
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
+        public static DereCoin Singleton { get; private set; }
 
-        private static readonly DereCoin Singleton = new();
+        public Dictionary<ushort, int> CoinUses = new Dictionary<ushort, int>();
 
         private Handlers.Player playerHandler;
-        public static DereCoin Instance => Singleton;
 
         public override void OnEnabled()
         {
             base.OnEnabled();
+            Singleton = this;
             RegisterEvents();
         }
 
@@ -38,7 +38,7 @@ namespace DereCoin
 
         public void RegisterEvents()
         {
-            playerHandler = new Handlers.Player(this);
+            playerHandler = new Handlers.Player();
             Player.FlippingCoin += playerHandler.OnCoinFlip;
         }
 

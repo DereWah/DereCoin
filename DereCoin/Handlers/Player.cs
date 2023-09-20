@@ -13,23 +13,19 @@ namespace DereCoin.Handlers
     class Player
     {
 
-        public Player(DereCoin plugin) => this.plugin = plugin;
-
-        public DereCoin plugin;
-
         public void OnCoinFlip(FlippingCoinEventArgs ev)
         {
             List<CoinChanceBase> joined = new();
             List<CoinChanceBase> eval = new();
 
-            if (plugin.Config.CoinItems is not null || plugin.Config.CoinEffects is not null)
+            if (DereCoin.Singleton.Config.CoinItems is not null || DereCoin.Singleton.Config.CoinEffects is not null)
             {
                 
-                if (plugin.Config.CoinItems is not null)
-                    joined.AddRange(plugin.Config.CoinItems);
+                if (DereCoin.Singleton.Config.CoinItems is not null)
+                    joined.AddRange(DereCoin.Singleton.Config.CoinItems);
 
-                if (plugin.Config.CoinEffects is not null)
-                    joined.AddRange(plugin.Config.CoinEffects);
+                if (DereCoin.Singleton.Config.CoinEffects is not null)
+                    joined.AddRange(DereCoin.Singleton.Config.CoinEffects);
             
                 foreach (CoinChanceBase ccb in joined)
                 {
@@ -41,7 +37,14 @@ namespace DereCoin.Handlers
 
                 if (eval.Count() > 0)
                 {
-                    ev.Player.RemoveItem(ev.Item);
+
+                    if (!DereCoin.Singleton.CoinUses.ContainsKey(ev.Item.Serial)) DereCoin.Singleton.CoinUses.Add(ev.Item.Serial, 0);
+                    DereCoin.Singleton.CoinUses[ev.Item.Serial] += 1;
+                    if (DereCoin.Singleton.CoinUses[ev.Item.Serial] >= DereCoin.Singleton.Config.CoinMaxUses)
+                    {
+                        ev.Player.RemoveItem(ev.Item);
+                    }
+                    
 
                     eval.ShuffleList();
                     CoinChanceBase selectedElement = eval.FirstOrDefault();

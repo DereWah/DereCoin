@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,6 +37,8 @@ namespace DereCoin
             }
         };
 
+        [Description("The maximum amount of coinflips before the coin disappears.")]
+        public int CoinMaxUses { get; set; } = 3;
 
     }
 }

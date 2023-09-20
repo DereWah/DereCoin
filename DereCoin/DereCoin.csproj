@@ -34,13 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp-Publicized">
-      <HintPath>..\..\..\..\Desktop\SCPServer\Master\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath>..\..\..\..\..\Documents\SLDEV\Master\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.API">
-      <HintPath>..\..\..\..\AppData\Roaming\EXILED\Plugins\dependencies\Exiled.API.dll</HintPath>
+      <HintPath>..\..\..\..\..\AppData\Roaming\EXILED\Plugins\dependencies\Exiled.API.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Events">
-      <HintPath>..\..\..\..\AppData\Roaming\EXILED\Plugins\Exiled.Events.dll</HintPath>
+      <HintPath>..\..\..\..\..\AppData\Roaming\EXILED\Plugins\Exiled.Events.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Desktop\SCPServer\Master\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\Documents\SLDEV\Master\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
