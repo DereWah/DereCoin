@@ -38,11 +38,14 @@ namespace DereCoin.Handlers
                 if (eval.Count() > 0)
                 {
 
-                    if (!DereCoin.Singleton.CoinUses.ContainsKey(ev.Item.Serial)) DereCoin.Singleton.CoinUses.Add(ev.Item.Serial, 0);
-                    DereCoin.Singleton.CoinUses[ev.Item.Serial] += 1;
-                    if (DereCoin.Singleton.CoinUses[ev.Item.Serial] >= DereCoin.Singleton.Config.CoinMaxUses)
+                    if (!DereCoin.Singleton.CoinUses.ContainsKey(ev.Item.Serial)) DereCoin.Singleton.CoinUses.Add(ev.Item.Serial, (0, UnityEngine.Random.Range(1, DereCoin.Singleton.Config.CoinMaxUses)));
+                    //override the tuple value in the dictionary with a new tuple, where the left value is the original left value increased by 1
+                    DereCoin.Singleton.CoinUses[ev.Item.Serial] = (DereCoin.Singleton.CoinUses[ev.Item.Serial].Item1+1, DereCoin.Singleton.CoinUses[ev.Item.Serial].Item2);
+                    //check if the left value is greather or equal than the right value. If so remove the coin
+                    if (DereCoin.Singleton.CoinUses[ev.Item.Serial].Item1 >= DereCoin.Singleton.CoinUses[ev.Item.Serial].Item2)
                     {
                         ev.Player.RemoveItem(ev.Item);
+                        DereCoin.Singleton.CoinUses.Remove(ev.Item.Serial);
                     }
                     
 

@@ -19,7 +19,7 @@ namespace DereCoin
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
         public static DereCoin Singleton { get; private set; }
 
-        public Dictionary<ushort, int> CoinUses = new Dictionary<ushort, int>();
+        public Dictionary<ushort, (int, int)> CoinUses = new Dictionary<ushort, (int, int)>();
 
         private Handlers.Player playerHandler;
 
