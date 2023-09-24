@@ -1,4 +1,4 @@
-# DereCoin
+# DereCoin ![Downloads](https://img.shields.io/github/downloads/DereWah/DereCoin/total)
 DereCoin is an Exiled plugin for the game SCP:Secret Laboratory.
 Whenever a player flips a coin, they will be awarded with a random Item / Effect.
 
